@@ -30,5 +30,14 @@ namespace Arcanoid
         public ConsoleColor BlockColor { get; } = ConsoleColor.Yellow;
         public int LinesOfBlocks { get; } = 4;
         public int BlocksInOneLine { get; } = 20;
+        
+        public const ConsoleKey MoveRight = ConsoleKey.RightArrow;
+        
+        public const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
+        
+        public const ConsoleKey Restart = ConsoleKey.Enter;
+        
+        public const ConsoleKey Exit = ConsoleKey.Escape;
+
     }
 }

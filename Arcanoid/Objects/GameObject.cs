@@ -8,16 +8,14 @@ namespace Arcanoid.Objects
 {
     internal abstract class GameObject
     {
-        int top;
-        int left;
         bool isDestructable;
         ConsoleColor color;
         int length;
         int lines;
         char symbol;
 
-        public int Top { get => top; }
-        public int Left { get => left; }
+        public int Top { get; set; }
+        public int Left { get; set; }
         public bool IsDestructable { get => isDestructable; }
         public ConsoleColor Color { get => color; }
         public int Length { get => length; }
@@ -26,8 +24,8 @@ namespace Arcanoid.Objects
 
         public GameObject(int top, int left, bool isDestructable, ConsoleColor color, int length, int lines, char symbol)
         {
-            this.top = top;
-            this.left = left;
+            this.Top = top;
+            this.Left = left;
             this.isDestructable = isDestructable;
             this.color = color;
             this.length = length;
