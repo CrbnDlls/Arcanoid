@@ -11,9 +11,12 @@ namespace Arkanoid
     {
         private readonly Frame frame;
 
+        private readonly object key;
+
         public FrameRenderer(Frame frame)
         {
             this.frame = frame;
+            key = new object();
         }
 
         public void InitialDraw()
@@ -51,46 +54,61 @@ namespace Arkanoid
         public void DestroyBlock(GameObject block)
         {
             StringBuilder stringBuilder = new StringBuilder();
-
-            Console.SetCursorPosition(block.Left, block.Top);
-
+            
             for (int i = 0; i < block.Length; i++)
             {
                 stringBuilder.Append(' ');
             }
+            
+            lock (key)
+            {
+                Console.SetCursorPosition(block.Left, block.Top);
 
-            Console.Write(stringBuilder.ToString());
-
+                Console.Write(stringBuilder.ToString());
+            }
+            
             Console.SetCursorPosition(0, 0);
         }
 
         public void DestroyBall()
         {
-            Console.SetCursorPosition(frame.Ball.Left, frame.Ball.Top);
+            lock (key)
+            {
+                Console.SetCursorPosition(frame.Ball.Left, frame.Ball.Top);
 
-            Console.Write(' ');
+                Console.Write(' ');
+            }
         }
 
         public void DrawBall()
         {
-            Console.ForegroundColor = frame.Ball.Color;
+            lock (key)
+            {
+                Console.ForegroundColor = frame.Ball.Color;
 
-            Console.SetCursorPosition(frame.Ball.Left, frame.Ball.Top);
+                Console.SetCursorPosition(frame.Ball.Left, frame.Ball.Top);
 
-            Console.Write(frame.Ball.Symbol);
+                Console.Write(frame.Ball.Symbol);
+            }
         }
 
         public void DestroyPlatform()
         {
             for (int j = 0; j < frame.PlayerPlatform.Lines; j++)
             {
-                Console.SetCursorPosition(frame.PlayerPlatform.Left, frame.PlayerPlatform.Top + j);
+                
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < frame.PlayerPlatform.Length; i++)
                 {
                     sb.Append(' ');
                 }
-                Console.Write(sb.ToString());
+
+                lock (key)
+                {
+                    Console.SetCursorPosition(frame.PlayerPlatform.Left, frame.PlayerPlatform.Top + j);
+
+                    Console.Write(sb.ToString());
+                }
             }
         }
 
@@ -100,13 +118,19 @@ namespace Arkanoid
 
             for (int j = 0; j < frame.PlayerPlatform.Lines; j++)
             {
-                Console.SetCursorPosition(frame.PlayerPlatform.Left, frame.PlayerPlatform.Top + j);
+                
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < frame.PlayerPlatform.Length; i++)
                 {
                     sb.Append(frame.PlayerPlatform.Symbol);
                 }
-                Console.Write(sb.ToString());
+                
+                lock (key)
+                {
+                    Console.SetCursorPosition(frame.PlayerPlatform.Left, frame.PlayerPlatform.Top + j);
+
+                    Console.Write(sb.ToString());
+                }
             }
         }
     }
