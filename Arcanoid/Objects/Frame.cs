@@ -1,11 +1,11 @@
-﻿using Arcanoid.Factories;
+﻿using Arkanoid.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arcanoid.Objects
+namespace Arkanoid.Objects
 {
     internal class Frame
     {

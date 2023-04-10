@@ -1,4 +1,4 @@
-﻿using Arcanoid.Objects;
+﻿using Arkanoid.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Arcanoid
+namespace Arkanoid
 {
     internal class GameEngine
     {
@@ -43,7 +43,7 @@ namespace Arcanoid
 
         public void PlatformMove(Direction direction)
         {
-            if(direction == Direction.Left)
+            if (direction == Direction.Left)
             {
                 if (frame.PlayerPlatform.Left > 0)
                 {
@@ -52,14 +52,11 @@ namespace Arcanoid
                     frameRenderer.DrawPlatform();
                 }
             }
-            else if(direction == Direction.Right) 
+            else if (direction == Direction.Right && frame.PlayerPlatform.Left < gameSettings.ConsoleWidth - frame.PlayerPlatform.Length - 1)
             {
-                if (frame.PlayerPlatform.Left < gameSettings.ConsoleWidth - frame.PlayerPlatform.Length - 1)
-                {
-                    frameRenderer.DestroyPlatform();
-                    frame.PlayerPlatform.Left += 1;
-                    frameRenderer.DrawPlatform();
-                }
+                frameRenderer.DestroyPlatform();
+                frame.PlayerPlatform.Left += 1;
+                frameRenderer.DrawPlatform();
             }
         }
 
@@ -67,7 +64,23 @@ namespace Arcanoid
         {
             
             Ball ball = frame.Ball as Ball;
-            
+
+            CheckBlocksHit(ball);
+
+            CheckPlatformHit(ball);
+
+            CheckWallHit(ball);
+
+            frameRenderer.DestroyBall();
+
+            ball.Left += ball.XDirection;
+            ball.Top += ball.YDirection;
+
+            frameRenderer.DrawBall();
+        }
+
+        private void CheckWallHit(Ball ball)
+        {
             if (ball.Top == 0 && ball.YDirection < 0)
             {
                 ball.YDirection = -ball.YDirection;
@@ -84,15 +97,6 @@ namespace Arcanoid
             {
                 ball.YDirection = -ball.YDirection;
             }
-
-            CheckPlatformHit(ball);
-
-            frameRenderer.DestroyBall();
-
-            ball.Left += ball.XDirection;
-            ball.Top += ball.YDirection;
-
-            frameRenderer.DrawBall();
         }
 
         private void CheckPlatformHit(Ball ball) 
@@ -103,6 +107,30 @@ namespace Arcanoid
                 ball.Left <= frame.PlayerPlatform.Left + frame.PlayerPlatform.Length)
             {
                 ball.YDirection = -ball.YDirection;
+            }
+        }
+
+        private void CheckBlocksHit(Ball ball)
+        {
+            for (int i = 0; i < frame.Blocks.Count; i++)
+            {
+                if (frame.Blocks[i].Top != ball.Top + ball.YDirection)
+                {
+                    continue;
+                }
+
+                if (frame.Blocks[i].Left <= ball.Left + ball.XDirection &&
+                    frame.Blocks[i].Left + frame.Blocks[i].Length >= ball.Left + ball.XDirection)
+                {
+                    ball.YDirection = -ball.YDirection;
+                    
+                    if (frame.Blocks[i].IsDestructable)
+                    {
+                        frameRenderer.DestroyBlock(frame.Blocks[i]);
+                        frame.Blocks.RemoveAt(i);
+                    }
+                }
+
             }
         }
     }

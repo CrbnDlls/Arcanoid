@@ -1,11 +1,11 @@
-﻿using Arcanoid.Objects;
+﻿using Arkanoid.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arcanoid
+namespace Arkanoid
 {
     internal class FrameRenderer
     {
@@ -46,6 +46,22 @@ namespace Arcanoid
 
                 Console.Write(stringBuilder.ToString());
             }
+        }
+
+        public void DestroyBlock(GameObject block)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            Console.SetCursorPosition(block.Left, block.Top);
+
+            for (int i = 0; i < block.Length; i++)
+            {
+                stringBuilder.Append(' ');
+            }
+
+            Console.Write(stringBuilder.ToString());
+
+            Console.SetCursorPosition(0, 0);
         }
 
         public void DestroyBall()
