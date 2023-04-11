@@ -38,6 +38,7 @@ namespace Arkanoid
         public const ConsoleKey Restart = ConsoleKey.Enter;
         
         public const ConsoleKey Exit = ConsoleKey.Escape;
+        public int PlayerLives { get; } = 3;
 
     }
 }

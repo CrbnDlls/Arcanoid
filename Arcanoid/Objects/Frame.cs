@@ -16,6 +16,8 @@ namespace Arkanoid.Objects
         private List<GameObject> blocks;
 
         private readonly GameSettings gameSettings;
+        public TimeSpan PlayTime { get; set; }
+        public int PlayerLives { get; set; }
 
         public int TotalScore { get; set; }
         public int TemporaryScore { get; set; }
@@ -34,6 +36,8 @@ namespace Arkanoid.Objects
 
             BlockFactory blockFactory = new BlockFactory(gameSettings);
             blocks = blockFactory.GetBlocks();
+
+            PlayerLives = gameSettings.PlayerLives;
         }
     }
 }

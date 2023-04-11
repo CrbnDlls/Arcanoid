@@ -30,6 +30,8 @@ namespace Arkanoid
             DrawTotalScore();
 
             DrawTemporaryScore();
+
+            DrawPlayerLives();
            
             Console.ResetColor();
 
@@ -144,7 +146,7 @@ namespace Arkanoid
         {
             lock (key)
             {
-                Console.SetCursorPosition(40, 22);
+                Console.SetCursorPosition(45, 22);
 
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
 
@@ -174,6 +176,30 @@ namespace Arkanoid
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 Console.Write("Game OVER !!!");
+            }
+        }
+
+        public void DrawPlayerLives()
+        {
+            lock (key)
+            {
+                Console.SetCursorPosition(20, 22);
+
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+                Console.Write($"Lives: {frame.PlayerLives}");
+            }
+        }
+
+        public void DrawPlayTime()
+        {
+            lock (key)
+            {
+                Console.SetCursorPosition(30, 22);
+
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+                Console.Write($"Time: {frame.PlayTime.TotalSeconds:N0} sec.");
             }
         }
     }

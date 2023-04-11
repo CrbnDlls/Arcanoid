@@ -15,6 +15,8 @@ namespace Arkanoid
         private readonly FrameRenderer frameRenderer;
         private bool isRunning;
         private bool isPlatformHit;
+        private DateTime StartGameTime;
+        
         
 
         public GameEngine(GameSettings gameSettings) 
@@ -28,15 +30,20 @@ namespace Arkanoid
             isRunning = true;
 
             isPlatformHit = true;
+
+            
         }
 
         public void Run()
         {
             frameRenderer.InitialDraw();
+            StartGameTime = DateTime.Now;
             while(isRunning)
             {
+                frame.PlayTime = DateTime.Now - StartGameTime;
                 BallMove();
                 Thread.Sleep(100);
+                frameRenderer.DrawPlayTime();
             }
 
             Console.ReadKey();
@@ -101,8 +108,23 @@ namespace Arkanoid
             }
             if (ball.Top == gameSettings.ConsoleHeight - 1 && ball.YDirection > 0)
             {
-                isRunning = false;
-                frameRenderer.DrawGameOver();
+                if (frame.PlayerLives > 0)
+                {
+                    frame.PlayerLives--;
+                    frameRenderer.DestroyBall();
+                    ball.Top = gameSettings.BallStartTop;
+                    ball.Left = gameSettings.BallStartLeft;
+                    ball.YDirection = -1;
+                    ball.XDirection = 1;
+                    frameRenderer.DrawBall();
+                    frameRenderer.DrawPlayerLives();
+                }
+                else
+                {
+                    isRunning = false;
+                    frameRenderer.DrawGameOver();
+                }
+                
                 //ball.YDirection = -ball.YDirection; 
             }
         }
