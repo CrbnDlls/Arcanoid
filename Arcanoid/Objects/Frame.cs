@@ -17,6 +17,8 @@ namespace Arkanoid.Objects
 
         private readonly GameSettings gameSettings;
 
+        public int TotalScore { get; set; }
+        public int TemporaryScore { get; set; }
         public GameObject PlayerPlatform { get { return playerPlatform; } }
         public GameObject Ball { get { return ball; } }
         public List<GameObject> Blocks { get { return blocks; } }

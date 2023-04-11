@@ -10,8 +10,10 @@ namespace Arkanoid.Factories
 {
     internal class BlockFactory : AbstractFactory
     {
+        private readonly Random random;
         public BlockFactory(GameSettings gameSettings) : base(gameSettings)
         {
+            random = new Random();
         }
 
         public List<GameObject> GetBlocks()
@@ -48,11 +50,17 @@ namespace Arkanoid.Factories
 
         public override GameObject GetGameObject(int top, int left, bool isDestructable)
         {
-            return new Block(   top, left, isDestructable,
+            
+
+            Block block = new Block(top, left, isDestructable,
                                 isDestructable ? gameSettings.BlockColor : gameSettings.IndestructableBlockColor,
                                 3,
                                 1,
                                 gameSettings.BlockSymbol);
+
+            block.QuantityHitsToDestroy = random.Next(1, 3);
+            
+            return block;
         }
     }
 }

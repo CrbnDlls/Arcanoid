@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollisionPoints.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Factories\AbstractFactory.cs" />
     <Compile Include="Factories\BallFactory.cs" />

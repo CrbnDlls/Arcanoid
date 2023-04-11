@@ -26,6 +26,10 @@ namespace Arkanoid
             DrawPlatform();
 
             DrawBall();
+
+            DrawTotalScore();
+
+            DrawTemporaryScore();
            
             Console.ResetColor();
 
@@ -114,7 +118,7 @@ namespace Arkanoid
 
         public void DrawPlatform()
         {
-            Console.ForegroundColor = frame.PlayerPlatform.Color;
+            
 
             for (int j = 0; j < frame.PlayerPlatform.Lines; j++)
             {
@@ -127,10 +131,49 @@ namespace Arkanoid
                 
                 lock (key)
                 {
+                    Console.ForegroundColor = frame.PlayerPlatform.Color;
+
                     Console.SetCursorPosition(frame.PlayerPlatform.Left, frame.PlayerPlatform.Top + j);
 
                     Console.Write(sb.ToString());
                 }
+            }
+        }
+
+        public void DrawTemporaryScore()
+        {
+            lock (key)
+            {
+                Console.SetCursorPosition(40, 22);
+
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+                Console.Write($@"{(frame.TemporaryScore.ToString().Length == 1 ? " " +  frame.TemporaryScore :
+                                                                                 frame.TemporaryScore.ToString())}");
+            }
+        }
+
+        public void DrawTotalScore()
+        {
+            lock (key)
+            {
+                Console.SetCursorPosition(2, 22);
+
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+                Console.Write($"Total score: {frame.TotalScore}");
+            }
+        }
+
+        public void DrawGameOver()
+        {
+            lock (key)
+            {
+                Console.SetCursorPosition(33, 12);
+
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.Write("Game OVER !!!");
             }
         }
     }

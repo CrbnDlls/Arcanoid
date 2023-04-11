@@ -15,7 +15,7 @@ namespace Arkanoid
 
         public int ConsoleWidth { get; } = 80;
         public int ConsoleHeight { get; } = 20;
-        public int BlocksStartTop { get; } = 1;
+        public int BlocksStartTop { get; } = 2;
         public int BlocksStartLeft { get; } = 1;
         public int PlayerPlatformStartTop { get; } = 17;
         public int PlayerPlatformStartLeft { get; } = 36;

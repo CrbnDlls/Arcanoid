@@ -9,13 +9,15 @@ namespace Arkanoid
     internal class Program
     {
         static GameEngine gameEngine;
+        static GameSettings gameSettings;
         static void Main(string[] args)
         {
-            GameSettings gameSettings = new GameSettings();
+            gameSettings = new GameSettings();
             UiController uiController = new UiController(gameSettings);
             uiController.OnLeftPressed += LeftClick;
             uiController.OnRightPressed += RightClick;
-            uiController.OnExit += Exit;
+            uiController.OnEscapePressed += Exit;
+            uiController.OnEnterPressed += RestartGame;
 
             Task uiThread = new Task(uiController.StartListen);
             uiThread.Start();
@@ -37,6 +39,12 @@ namespace Arkanoid
         static void LeftClick(object sender, EventArgs e)
         {
             gameEngine.PlatformMove(Direction.Left);
+        }
+
+        static void RestartGame(object sender, EventArgs e)
+        {
+            gameEngine = new GameEngine(gameSettings);
+            gameEngine.Run();
         }
     }
 }

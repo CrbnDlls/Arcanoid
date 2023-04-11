@@ -10,8 +10,8 @@ namespace Arkanoid
     {
         public EventHandler OnRightPressed;
         public EventHandler OnLeftPressed;
-        public EventHandler OnRestart;
-        public EventHandler OnExit;
+        public EventHandler OnEnterPressed;
+        public EventHandler OnEscapePressed;
 
         private readonly GameSettings gameSettings;
         public UiController(GameSettings gameSettings) 
@@ -36,10 +36,10 @@ namespace Arkanoid
                             OnLeftPressed?.Invoke(this, EventArgs.Empty);
                             break;
                         case GameSettings.Restart:
-                            OnRestart?.Invoke(this, EventArgs.Empty);
+                            OnEnterPressed?.Invoke(this, EventArgs.Empty);
                             break;
                         case GameSettings.Exit:
-                            OnExit?.Invoke(this, EventArgs.Empty);
+                            OnEscapePressed?.Invoke(this, EventArgs.Empty);
                             break;
                     }
                 }

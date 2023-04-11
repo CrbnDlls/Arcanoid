@@ -14,6 +14,9 @@ namespace Arkanoid
         private readonly GameSettings gameSettings;
         private readonly FrameRenderer frameRenderer;
         private bool isRunning;
+        private bool isPlatformHit;
+        
+
         public GameEngine(GameSettings gameSettings) 
         {
             this.gameSettings = gameSettings;
@@ -23,17 +26,20 @@ namespace Arkanoid
             this.frameRenderer = new FrameRenderer(frame);
 
             isRunning = true;
+
+            isPlatformHit = true;
         }
 
         public void Run()
         {
-            
             frameRenderer.InitialDraw();
             while(isRunning)
             {
                 BallMove();
                 Thread.Sleep(100);
             }
+
+            Console.ReadKey();
         }
 
         public void Exit() 
@@ -85,17 +91,19 @@ namespace Arkanoid
             {
                 ball.YDirection = -ball.YDirection;
             }
-            else if (ball.Left == 0 && ball.XDirection < 0)
+            if (ball.Left == 0 && ball.XDirection < 0)
             {
                 ball.XDirection = -ball.XDirection;
             }
-            else if (ball.Left == gameSettings.ConsoleWidth - 1 && ball.XDirection > 0)
+            if (ball.Left == gameSettings.ConsoleWidth - 1 && ball.XDirection > 0)
             {
                 ball.XDirection = -ball.XDirection;
             }
-            else if (ball.Top == gameSettings.ConsoleHeight - 1 && ball.YDirection > 0)
+            if (ball.Top == gameSettings.ConsoleHeight - 1 && ball.YDirection > 0)
             {
-                ball.YDirection = -ball.YDirection;
+                isRunning = false;
+                frameRenderer.DrawGameOver();
+                //ball.YDirection = -ball.YDirection; 
             }
         }
 
@@ -107,6 +115,12 @@ namespace Arkanoid
                 ball.Left <= frame.PlayerPlatform.Left + frame.PlayerPlatform.Length)
             {
                 ball.YDirection = -ball.YDirection;
+                isPlatformHit = true;
+                frame.TotalScore += frame.TemporaryScore;
+                frame.TemporaryScore = 0;
+
+                frameRenderer.DrawTemporaryScore();
+                frameRenderer.DrawTotalScore();
             }
         }
 
@@ -126,11 +140,29 @@ namespace Arkanoid
                     
                     if (frame.Blocks[i].IsDestructable)
                     {
-                        frameRenderer.DestroyBlock(frame.Blocks[i]);
-                        frame.Blocks.RemoveAt(i);
+                        Block block = frame.Blocks[i] as Block;
+                        block.QuantityHitsToDestroy -= 1;
+                        if (block.QuantityHitsToDestroy <= 0)
+                        {
+                            if (!isPlatformHit)
+                            {
+                                frame.TemporaryScore += 1;
+                                frameRenderer.DrawTemporaryScore();
+                            }
+                            frameRenderer.DestroyBlock(frame.Blocks[i]);
+                            frame.Blocks.RemoveAt(i);
+                        }
                     }
+
+                    isPlatformHit = false;
                 }
 
+            }
+
+            if (!frame.Blocks.Any(x => x.IsDestructable))
+            {
+                isRunning = false;
+                frameRenderer.DrawGameOver();
             }
         }
     }
