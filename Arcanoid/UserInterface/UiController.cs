@@ -12,6 +12,8 @@ namespace Arkanoid
         public EventHandler OnLeftPressed;
         public EventHandler OnEnterPressed;
         public EventHandler OnEscapePressed;
+        public EventHandler OnF2Pressed;
+        public EventHandler OnF12Pressed;
 
         private readonly GameSettings gameSettings;
         public UiController(GameSettings gameSettings) 
@@ -29,17 +31,23 @@ namespace Arkanoid
 
                     switch (key)
                     {
-                        case GameSettings.MoveRight:
+                        case ConsoleKey.RightArrow:
                             OnRightPressed?.Invoke(this, EventArgs.Empty);
                             break;
-                        case GameSettings.MoveLeft:
+                        case ConsoleKey.LeftArrow:
                             OnLeftPressed?.Invoke(this, EventArgs.Empty);
                             break;
-                        case GameSettings.Restart:
+                        case ConsoleKey.Enter:
                             OnEnterPressed?.Invoke(this, EventArgs.Empty);
                             break;
-                        case GameSettings.Exit:
+                        case ConsoleKey.Escape:
                             OnEscapePressed?.Invoke(this, EventArgs.Empty);
+                            break;
+                        case ConsoleKey.F2:
+                            OnF2Pressed?.Invoke(this, EventArgs.Empty);
+                            break;
+                        case ConsoleKey.F12:
+                            OnF12Pressed?.Invoke(this, EventArgs.Empty);
                             break;
                     }
                 }

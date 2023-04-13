@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arkanoid
+namespace Arcanoid.UserInterface
 {
-    public enum Direction
+    public enum GuiAction
     {
-        Right,
-        Left
+        DisplayStartMenu,
+        DisplayHelp,
+        StartGame
     }
 }

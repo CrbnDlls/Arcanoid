@@ -21,6 +21,8 @@ namespace Arkanoid
 
         public void InitialDraw()
         {
+            Console.Clear();
+
             DrawBlocks();
 
             DrawPlatform();

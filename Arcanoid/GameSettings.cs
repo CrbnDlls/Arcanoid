@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Arkanoid
 {
-    internal class GameSettings
+    public class GameSettings
     {
         public GameSettings()
         {
@@ -30,14 +30,6 @@ namespace Arkanoid
         public ConsoleColor BlockColor { get; } = ConsoleColor.Yellow;
         public int LinesOfBlocks { get; } = 4;
         public int BlocksInOneLine { get; } = 20;
-        
-        public const ConsoleKey MoveRight = ConsoleKey.RightArrow;
-        
-        public const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
-        
-        public const ConsoleKey Restart = ConsoleKey.Enter;
-        
-        public const ConsoleKey Exit = ConsoleKey.Escape;
         public int PlayerLives { get; } = 3;
 
     }

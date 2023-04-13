@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Arkanoid
 {
-    internal class GameEngine
+    public class GameEngine
     {
         private Frame frame;
         private readonly GameSettings gameSettings;
@@ -17,7 +17,7 @@ namespace Arkanoid
         private bool isPlatformHit;
         private DateTime StartGameTime;
         
-        
+        public bool IsRunning { get => isRunning; }
 
         public GameEngine(GameSettings gameSettings) 
         {
@@ -27,7 +27,7 @@ namespace Arkanoid
 
             this.frameRenderer = new FrameRenderer(frame);
 
-            isRunning = true;
+            
 
             isPlatformHit = true;
 
@@ -36,6 +36,7 @@ namespace Arkanoid
 
         public void Run()
         {
+            isRunning = true;
             frameRenderer.InitialDraw();
             StartGameTime = DateTime.Now;
             while(isRunning)
@@ -45,8 +46,6 @@ namespace Arkanoid
                 Thread.Sleep(100);
                 frameRenderer.DrawPlayTime();
             }
-
-            Console.ReadKey();
         }
 
         public void Exit() 

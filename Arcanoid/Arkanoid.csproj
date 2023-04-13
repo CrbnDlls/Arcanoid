@@ -56,10 +56,12 @@
     <Compile Include="Objects\Frame.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="Objects\PlayerPlatform.cs" />
-    <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UiController.cs" />
+    <Compile Include="UserInterface\Gui.cs" />
+    <Compile Include="UserInterface\GuiAction.cs" />
+    <Compile Include="UserInterface\Status.cs" />
+    <Compile Include="UserInterface\UiController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
