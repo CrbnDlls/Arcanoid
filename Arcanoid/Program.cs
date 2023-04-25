@@ -26,6 +26,7 @@ namespace Arkanoid
             uiController.OnEnterPressed += RestartGame;
             uiController.OnF2Pressed += RestartGame;
             uiController.OnF12Pressed += DisplayHelp;
+            uiController.OnPPressed += Pause;
 
             Task uiThread = new Task(uiController.StartListen);
             uiThread.Start();
@@ -42,7 +43,6 @@ namespace Arkanoid
                 {
                     gui.Show(guiAction);
                     autoResetEvent.WaitOne();
-                    
                 }
 
             } while (gameRunning);
@@ -74,6 +74,11 @@ namespace Arkanoid
         static void LeftClick(object sender, EventArgs e)
         {
             gameEngine.PlatformMove(Direction.Left);
+        }
+
+        static void Pause(object sender, EventArgs e)
+        {
+            gameEngine.Pause();
         }
 
         static void RestartGame(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace Arkanoid
         public EventHandler OnEscapePressed;
         public EventHandler OnF2Pressed;
         public EventHandler OnF12Pressed;
+        public EventHandler OnPPressed;
 
         private readonly GameSettings gameSettings;
         public UiController(GameSettings gameSettings) 
@@ -48,6 +49,9 @@ namespace Arkanoid
                             break;
                         case ConsoleKey.F12:
                             OnF12Pressed?.Invoke(this, EventArgs.Empty);
+                            break;
+                        case ConsoleKey.P:
+                            OnPPressed?.Invoke(this, EventArgs.Empty);
                             break;
                     }
                 }

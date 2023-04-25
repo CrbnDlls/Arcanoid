@@ -15,8 +15,11 @@ namespace Arkanoid
         private readonly FrameRenderer frameRenderer;
         private bool isRunning;
         private bool isPlatformHit;
+        private bool isPause;
         private DateTime StartGameTime;
-        
+        private ManualResetEvent manualResetEvent;
+
+
         public bool IsRunning { get => isRunning; }
 
         public GameEngine(GameSettings gameSettings) 
@@ -26,12 +29,10 @@ namespace Arkanoid
             frame = new Frame(gameSettings);
 
             this.frameRenderer = new FrameRenderer(frame);
-
             
-
             isPlatformHit = true;
 
-            
+            manualResetEvent = new ManualResetEvent(true);
         }
 
         public void Run()
@@ -41,10 +42,25 @@ namespace Arkanoid
             StartGameTime = DateTime.Now;
             while(isRunning)
             {
+                manualResetEvent.WaitOne();
                 frame.PlayTime = DateTime.Now - StartGameTime;
                 BallMove();
                 Thread.Sleep(100);
                 frameRenderer.DrawPlayTime();
+            }
+        }
+
+        public void Pause()
+        {
+            if (isPause)
+            {
+                isPause = false;
+                manualResetEvent.Set();
+            }
+            else
+            {
+                isPause = true;
+                manualResetEvent.Reset();
             }
         }
 
