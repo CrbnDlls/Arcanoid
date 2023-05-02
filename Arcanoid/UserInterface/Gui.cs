@@ -45,10 +45,10 @@ namespace Arcanoid.UserInterface
             Console.Write("A R C A N O I D");
 
             Console.SetCursorPosition(35, 8);
-            Console.Write("Press \"F2\" to start new game");
+            Console.Write("Press \"P\" to pause game");
 
             Console.SetCursorPosition(35, 10);
-            Console.Write("Press \"F12\" to display help");
+            Console.Write("Use arrows to move platform");
 
             Console.SetCursorPosition(35, 12);
             Console.Write("Press \"Escape\" to return to start menu");

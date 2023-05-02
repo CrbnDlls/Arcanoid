@@ -83,6 +83,7 @@ namespace Arkanoid
 
         static void RestartGame(object sender, EventArgs e)
         {
+            gameEngine?.Exit();
             gameEngine = new GameEngine(gameSettings);
             gui.SetGameEngine(gameEngine);
             guiAction = GuiAction.StartGame;

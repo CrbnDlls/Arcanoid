@@ -127,10 +127,13 @@ namespace Arkanoid
                 {
                     frame.PlayerLives--;
                     frameRenderer.DestroyBall();
+                    frameRenderer.DestroyPlatform();
+                    frame.PlayerPlatform.Left = gameSettings.PlayerPlatformStartLeft;
                     ball.Top = gameSettings.BallStartTop;
                     ball.Left = gameSettings.BallStartLeft;
                     ball.YDirection = -1;
                     ball.XDirection = 1;
+                    frameRenderer.DrawPlatform();
                     frameRenderer.DrawBall();
                     frameRenderer.DrawPlayerLives();
                 }
@@ -139,8 +142,6 @@ namespace Arkanoid
                     isRunning = false;
                     frameRenderer.DrawGameOver();
                 }
-                
-                //ball.YDirection = -ball.YDirection; 
             }
         }
 
